@@ -19,6 +19,5 @@
         public bool OnReorder { get; set; }
         public CatalogItem() { }
 
-        // Additional code ...
     }
 }

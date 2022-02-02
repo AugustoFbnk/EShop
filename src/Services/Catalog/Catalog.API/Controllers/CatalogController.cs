@@ -50,7 +50,7 @@ namespace Catalog.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<ActionResult> UpdateProductAsync([FromBody] CatalogItem productToUpdate)
         {
-            var catalogItem = await _catalogContext.CatalogItems.SingleOrDefaultAsync(i => i.Id == productToUpdate.Id);
+            var catalogItem = await _catalogContext.CatalogItems.AsNoTracking().SingleOrDefaultAsync(i => i.Id == productToUpdate.Id);
 
             if (catalogItem == null)
             {
