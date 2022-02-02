@@ -1,0 +1,51 @@
+version: '3.4'
+
+services:
+
+  sqldata:
+    image: mcr.microsoft.com/mssql/server 
+    environment:
+      - SA_PASSWORD=aFbnk#@123
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - C:\dados\volumes\sqldata2:/var/opt/mssql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+     - "15672:15672"
+     - "5672:5672"
+
+  catalog.api:
+    image: ${DOCKER_REGISTRY-}catalogapi
+    environment:
+      DbServer: "sqldata"
+      DbPort: "1433"
+      DbUser: "SA"
+      Password: "aFbnk#@123"
+      Database: "CtlgDb"
+      EventBusConnection: "rabbitmq"
+      EventBusUserName: "guest"
+      EventBusPassword: "guest"
+      SubscriptionClientName: "Catalog"
+    build:
+      context: .
+      dockerfile: Services/Catalog/Catalog.API/Dockerfile
+    depends_on:
+      - sqldata
+      - rabbitmq
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    environment:
+      EventBusConnection: "rabbitmq"
+      EventBusUserName: "guest"
+      EventBusPassword: "guest"
+      SubscriptionClientName: "Basket"
+    build:
+      context: .
+      dockerfile:  Services/Basket/Basket.API/Dockerfile
+    depends_on:
+      - rabbitmq
