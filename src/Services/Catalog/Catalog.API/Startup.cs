@@ -84,13 +84,7 @@ namespace Catalog.API
 
         public static IServiceCollection AddCustomContexts(this IServiceCollection services, IConfiguration configuration)
         {
-            var server = configuration["DbServer"];
-            var port = configuration["DbPort"];
-            var user = configuration["DbUser"];
-            var password = configuration["Password"];
-            var database = configuration["Database"];
-
-            var connectionString = $"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}";
+            var connectionString = configuration["ConnectionString"];
 
             services.AddDbContext<CatalogContext>(options =>
             {

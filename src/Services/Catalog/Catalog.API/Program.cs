@@ -14,3 +14,6 @@ var app = builder.Build();
 startup.Configure(app, app.Environment);
 
 app.Run();
+
+//Needed to create test application with WebApplicationFactory
+public partial class Program { }

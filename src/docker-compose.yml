@@ -26,6 +26,7 @@ services:
       DbUser: "SA"
       Password: "aFbnk#@123"
       Database: "CtlgDb"
+      ConnectionString: "Server=sqldata, 1433;Initial Catalog=CtlgDb;User ID=SA;Password=aFbnk#@123"
       EventBusConnection: "rabbitmq"
       EventBusUserName: "guest"
       EventBusPassword: "guest"
@@ -46,6 +47,20 @@ services:
       SubscriptionClientName: "Basket"
     build:
       context: .
-      dockerfile:  Services/Basket/Basket.API/Dockerfile
+      dockerfile: Services/Basket/Basket.API/Dockerfile
     depends_on:
+      - rabbitmq
+
+  ordering.backgroundtasks:
+    image: ${DOCKER_REGISTRY-}orderingbackgroundtasks
+    environment:
+      EventBusConnection: "rabbitmq"
+      EventBusUserName: "guest"
+      EventBusPassword: "guest"
+      SubscriptionClientName: "BackgroundTasks"
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.BackgroundTasks/Dockerfile
+    depends_on:
+      - sqldata
       - rabbitmq
