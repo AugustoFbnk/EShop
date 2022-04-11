@@ -64,3 +64,13 @@ services:
     depends_on:
       - sqldata
       - rabbitmq
+
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGw/Dockerfile
+    depends_on:
+      - basket.api
+      - catalog.api
+      - ordering.backgroundtasks

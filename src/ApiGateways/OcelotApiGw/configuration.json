@@ -1,37 +1,17 @@
 {
-  "ReRoutes": [
+  "Routes": [
     {
-      "DownstreamPathTemplate": "/api/{version}/{everything}",
+      "DownstreamPathTemplate": "/api/v1/Catalog/items/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "catalog-api",
+          "Host": "catalog.api",
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/{version}/c/{everything}",
+      "UpstreamPathTemplate": "/v1/c/{id}",
       "UpstreamHttpMethod": [ "POST", "PUT", "GET" ]
-    },
-    {
-      "DownstreamPathTemplate": "/api/{version}/{everything}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "basket-api",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/{version}/b/{everything}",
-      "UpstreamHttpMethod": [ "POST", "PUT", "GET" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IdentityApiKey",
-        "AllowedScopes": []
-      }
     }
-
   ],
-  "GlobalConfiguration": {
-    "RequestIdKey": "OcRequestId",
-    "AdministrationPath": "/administration"
-  }
+  "GlobalConfiguration": { "BaseUrl": "https://localhost:5202" }
 }

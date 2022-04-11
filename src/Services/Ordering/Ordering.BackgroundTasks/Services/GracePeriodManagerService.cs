@@ -23,9 +23,10 @@ namespace Ordering.BackgroundTasks.Services
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                CheckConfirmedGracePeriodOrders();
+                //TODO: Configure db Connections string and database tables
+                //CheckConfirmedGracePeriodOrders();
 
-                await Task.Delay(_settings.CheckUpdateTime, stoppingToken);
+                //await Task.Delay(_settings.CheckUpdateTime, stoppingToken);
             }
         }
 
