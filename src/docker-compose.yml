@@ -38,6 +38,26 @@ services:
       - sqldata
       - rabbitmq
 
+  ordering.api:
+    image: ${DOCKER_REGISTRY-}orderingapi
+    environment:
+      DbServer: "sqldata"
+      DbPort: "1433"
+      DbUser: "SA"
+      Password: "aFbnk#@123"
+      Database: "OrdrDb"
+      ConnectionString: "Server=sqldata, 1433;Initial Catalog=OrdrDb;User ID=SA;Password=aFbnk#@123"
+      EventBusConnection: "rabbitmq"
+      EventBusUserName: "guest"
+      EventBusPassword: "guest"
+      SubscriptionClientName: "Catalog"
+    build:
+      context: .
+      dockerfile: Services/Ordering/Ordering.API/Dockerfile
+    depends_on:
+      - sqldata
+      - rabbitmq
+
   basket.api:
     image: ${DOCKER_REGISTRY-}basketapi
     environment:

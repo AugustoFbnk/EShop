@@ -5,6 +5,16 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
+      - "5102:80"
+      - "9102:81"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
       - "5101:80"
       - "9101:81"
     volumes:
